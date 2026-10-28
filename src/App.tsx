@@ -48,7 +48,7 @@ const [loading, setIsLoading] = useState<boolean>(false)
                 {!loading && !error && games?.data && games.data.length > 0 ?(
                 <div className="grid">
                 {
-                    games.data.map((el) => ( <GameCard {...el} />
+                    games.data.map((el, i) => ( <GameCard key={i} {...el} />
 ))}
                 </div>
                 ) : ( <p className="hint">
