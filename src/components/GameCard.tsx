@@ -1,10 +1,16 @@
-import { API_URL } from "../api";
+import { api, API_URL } from "../api";
+import { useGamesStore } from "../store/useGamesStore";
 import { GENRE_LABELS, type IGame } from "../types";
 interface IGameCard extends IGame {
 
 }
 
-export function GameCard({cover, title, description, rating, price, releaseDate, platforms, genre }: IGameCard) {
+export function GameCard({cover, title, description, rating, price, releaseDate, platforms, genre, documentId }: IGameCard) {
+const {getGames} = useGamesStore()
+    const handleDelete = async () => {
+    await api.deleteGame(documentId)
+    getGames()
+    }
     return (
         <article className="card">
             <div className="card__cover">
@@ -23,7 +29,7 @@ export function GameCard({cover, title, description, rating, price, releaseDate,
 
             <footer className="card__footer">
                 {price && <strong className={`${price === 0 ? 'free' : ''}`}>{price === 0 ? 'Free' : price +' P'}</strong>}
-                <button className="link-btn">Удалить</button>
+                <button className="link-btn" onClick={handleDelete}>Удалить</button>
             </footer>
         </article>
     )
